@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Image Showcase</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .product-item {
+            width: calc(30% - 20px);
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            flex: 1 0 calc(30% - 20px);
+            max-width: calc(30% - 20px);
+        }
+
+        .product-item:hover {
+            transform: scale(1.05);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            color: #e44d26;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .product-item {
+                width: calc(50% - 20px);
+                max-width: calc(50% - 20px);
+            }
+        }
+
+        .shopping-cart-btn {
+            position: fixed;
+            top: 20px;
+            right: 50px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .shopping-cart-btn img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cart-count {
+            background-color: #e44d26;
+            color: #fff;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .product-add-to-cart-btn {
+            background: rgb(78, 243, 78);
+            padding: 10px;
+            border: 2px solid #094cc8;
+            width: 100%;
+            border-radius: 20px;
+            font-family: "Roboto Condensed", sans-serif;
+            color: #094cc8;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .product-add-to-cart-btn:hover {
+            background: #094cc8;
+            color: rgb(78, 243, 78);
+            border: 2px solid rgb(78, 243, 78);
+        }
+    </style>
+</head>
+<body>
+
+    <button class="shopping-cart-btn" onclick="openCart()">
+        <img src="cart-shopping-solid.png" alt="Shopping Cart">
+        <span id="cart-count" class="cart-count">0</span>
+    </button>
+
+    <div class="container">
+        <div class="product">
+            <!-- Product 1 -->
+            <div class="product-item">
+                <img class="product-img" src="product1.png" alt="Product 1">
+                <div class="product-info">
+                    <div class="product-title">Test Product 1</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 1', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-item">
+                <img class="product-img" src="product2.png" alt="Product 2">
+                <div class="product-info">
+                    <div class="product-title">Test Product 2</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 2', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-item">
+                <img class="product-img" src="product3.png" alt="Product 3">
+                <div class="product-info">
+                    <div class="product-title">Test Product 3</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 3', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-item">
+                <img class="product-img" src="product4.png" alt="Product 4">
+                <div class="product-info">
+                    <div class="product-title">Test Product 4</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 4', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-item">
+                <img class="product-img" src="product5.png" alt="Product 5">
+                <div class="product-info">
+                    <div class="product-title">Test Product 5</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 5', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-item">
+                <img class="product-img" src="product6.png" alt="Product 6">
+                <div class="product-info">
+                    <div class="product-title">Test Product 6</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 6', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-item">
+                <img class="product-img" src="product7.png" alt="Product 7">
+                <div class="product-info">
+                    <div class="product-title">Test Product 7</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 7', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product-item">
+                <img class="product-img" src="product8.png" alt="Product 8">
+                <div class="product-info">
+                    <div class="product-title">Test Product 8</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 8', 49.99)">
+                </div>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="product-item">
+                <img class="product-img" src="product9.png" alt="Product 9">
+                <div class="product-info">
+                    <div class="product-title">Test Product 9</div>
+                    <div class="product-price">$49.99</div>
+                    <input type="submit" value="Add to cart" class="product-add-to-cart-btn" onclick="addToCart('Test Product 9', 49.99)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var cartItems = [];
+        var cartCount = 0;
+        var imagePathsCache = [];
+
+        // Load cart count and image paths from localStorage on page load
+        window.onload = function () {
+            var storedCartItems = localStorage.getItem('cartItems');
+            if (storedCartItems) {
+                cartItems = JSON.parse(storedCartItems);
+                cartCount = cartItems.length;
+                updateCartUI();
+            }
+
+            var storedImagePaths = localStorage.getItem('imagePaths');
+            if (storedImagePaths) {
+                imagePathsCache = JSON.parse(storedImagePaths);
+            }
+        };
+
+        function addToCart(productTitle, productPrice) {
+            var existingItem = cartItems.find(item => item.title === productTitle);
+
+            if (existingItem) {
+                console.log('Item is already in the cart!');
+            } else {
+                var newItem = {
+                    title: productTitle,
+                    price: productPrice
+                };
+
+                cartItems.push(newItem);
+                cartCount++;
+
+                // Save image path to cache
+                var imageNumber = getImageNumber(productTitle);
+                var imagePath = 'product' + imageNumber + '.png'; // adjust the extension as needed
+                imagePathsCache.push(imagePath);
+
+                updateCartUI();
+
+                console.log('Added to cart!');
+
+                // Save cart items and image paths to localStorage
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                saveImagePathsToLocalStorage();
+            }
+        }
+
+        function updateCartUI() {
+            var cartCountElement = document.getElementById("cart-count");
+            if (!cartCountElement) {
+                cartCountElement = document.createElement("span");
+                cartCountElement.id = "cart-count";
+                cartCountElement.className = "cart-count";
+                document.querySelector(".shopping-cart-btn").appendChild(cartCountElement);
+            }
+
+            cartCountElement.textContent = cartCount;
+        }
+
+        function openCart() {
+            window.location.href = "cart.html";
+        }
+
+        function saveImagePathsToLocalStorage() {
+            localStorage.setItem('imagePaths', JSON.stringify(imagePathsCache));
+        }
+
+        function getImageNumber(title) {
+            var match = title.match(/\d+/);
+            return match ? match[0] : '';
+        }
+    </script>
+</body>
+</html>

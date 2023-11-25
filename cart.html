@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 80px 0 0 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .cart-item {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            position: relative;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cart-item-price {
+            color: #e44d26;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .remove-button {
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%; /* Center the button vertically */
+            right: 10px; /* Adjust the right spacing */
+            background-color: #e44d26;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            transform: translateY(-50%); /* Adjust to center the button perfectly */
+        }
+
+        .continue-shopping-btn {
+            background: rgb(36, 37, 36);
+            padding: 10px;
+            width: 100%;
+            border-radius: 20px;
+            font-family: "Roboto Condensed", sans-serif;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .continue-shopping-btn:hover {
+            color: rgb(36, 37, 36);
+            background: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Shopping Cart</h1>
+        <div id="cart-items"></div>
+    </div>
+
+    <script>
+        // Load cart items and image paths from localStorage
+        var storedCartItems = localStorage.getItem('cartItems');
+        var storedImagePaths = localStorage.getItem('imagePaths');
+
+        var cartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
+        var imagePaths = storedImagePaths ? JSON.parse(storedImagePaths) : [];
+
+        // Display cart items on the cart page
+        function displayCartItems() {
+            var cartItemsContainer = document.getElementById('cart-items');
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your cart is empty.</p>';
+                
+                // Add a "Continue Shopping" button
+                var continueShoppingButton = document.createElement('button');
+                continueShoppingButton.className = 'continue-shopping-btn';
+                continueShoppingButton.textContent = 'Continue Shopping';
+                continueShoppingButton.addEventListener('click', goBack);
+                cartItemsContainer.appendChild(continueShoppingButton);
+            } else {
+                cartItemsContainer.innerHTML = '';
+
+                cartItems.forEach(function (item, index) {
+                    var cartItemDiv = document.createElement('div');
+                    cartItemDiv.className = 'cart-item';
+
+                    var imageElement = document.createElement('img');
+                    imageElement.src = imagePaths[index];
+                    imageElement.alt = item.title;
+
+                    var cartItemInfoDiv = document.createElement('div');
+                    cartItemInfoDiv.className = 'cart-item-info';
+
+                    var titleElement = document.createElement('div');
+                    titleElement.className = 'cart-item-title';
+                    titleElement.textContent = item.title;
+
+                    var priceElement = document.createElement('div');
+                    priceElement.className = 'cart-item-price';
+                    priceElement.textContent = '$' + item.price.toFixed(2);
+
+                    var removeButton = document.createElement('div');
+                    removeButton.className = 'remove-button';
+                    removeButton.textContent = 'Remove';
+                    removeButton.addEventListener('click', function () {
+                        removeItem(index);
+                    });
+
+                    cartItemInfoDiv.appendChild(titleElement);
+                    cartItemInfoDiv.appendChild(priceElement);
+                    cartItemInfoDiv.appendChild(removeButton);
+
+                    cartItemDiv.appendChild(imageElement);
+                    cartItemDiv.appendChild(cartItemInfoDiv);
+
+                    cartItemsContainer.appendChild(cartItemDiv);
+                });
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            cartItems.splice(index, 1);
+            imagePaths.splice(index, 1);
+            updateLocalStorage();
+            displayCartItems();
+        }
+
+        // Function to update localStorage with the current cart items
+        function updateLocalStorage() {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            localStorage.setItem('imagePaths', JSON.stringify(imagePaths));
+        }
+
+        // Function to go back to index.html
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Call the function to display cart items when the page loads
+        displayCartItems();
+    </script>
+</body>
+</html>
